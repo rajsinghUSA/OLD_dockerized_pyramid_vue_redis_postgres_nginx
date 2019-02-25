@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  redis:
+    image: 'redis:5.0-alpine'
+    command: redis-server --requirepass devpassword
+    volumes:
+      - './volumes/redis:/data'
+    ports:
+      - '6379:6379'
+    networks:
+      - redis_nw
+
+  db:
+    # container_name: postgres
+    image: "postgres:11.1"
+    env_file:
+      - ./resources/postgres_config/env_file
+    networks:
+      - db_nw
+
+  pyramid_app:
+    stdin_open: true
+    tty: true
+    image: image_from_dockerfile
+    env_file:
+      - ./resources/postgres_config/env_file
+    volumes:
+      - ./volumes/pyramid_app:/app
+    image: image_from_dockerfile
+    working_dir: /app
+    command: /app/venv/bin/pserve /app/src/development.ini --reload
+    networks:
+      - db_nw
+      - web_nw
+      - redis_nw
+    depends_on:
+      - db
+      - redis
+
+  nginx:
+    image: nginx:1.13.5
+    ports:
+      - "6543:80"
+    volumes:
+      - ./volumes/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - web_nw
+    depends_on:
+      - pyramid_app
+
+networks:
+  db_nw:
+    driver: bridge
+  web_nw:
+    driver: bridge
+  redis_nw:
+    driver: bridge
