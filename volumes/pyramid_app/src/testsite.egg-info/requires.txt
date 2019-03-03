@@ -1,0 +1,9 @@
+pyramid>=1.10
+pyramid_jinja2
+sqlalchemy
+waitress
+pyramid_tm
+pyramid_debugtoolbar
+pyramid_mailer
+pyramid_redis_sessions
+zope.sqlalchemy

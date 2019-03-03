@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Signup Page</h2>
-    <form @submit="signup">
+    <form @submit.prevent="signup" method="post" enctype="multipart/form-data">
       <div>
           <input  type="text" placeholder="Name" v-model="name">
       </div>
@@ -34,6 +34,7 @@
     },
     methods: {
       signup: function () {
+        debugger;
         let info = {
           name: this.name,
           email: this.email,

@@ -1,0 +1,16 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:mail="http://namespaces.repoze.org/mail">
+
+  <include package="repoze.sendmail" file="meta.zcml"/>
+
+  <mail:queuedDelivery
+      name="Mail"
+      queuePath="path/to/tmp/mailbox"
+      mailer="test.smtp" />
+
+  <mail:directDelivery
+      name="Mail2"
+      mailer="test.mailer"/>
+
+</configure>
+

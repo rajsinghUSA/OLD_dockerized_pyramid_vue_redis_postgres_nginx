@@ -17,10 +17,23 @@ from testsite.security import groupfinder
 registry = Registry()
 
 
-def hello_world(request):
-    print('Incoming request')
-    return Response('<body><h1>Hello World!</h1></body>')
+# def hello_world(request):
+#     print('Incoming request')
+#     return Response('<body><h1>Hello World!</h1></body>')
 
+
+
+
+
+# from pyramid.view import view_config
+# @view_config(route_name='home')
+# def home(request):
+#     print("\n\nIndex view ")
+# #    print "accessed by: ", request.user.username if request.user else 'unauthenticated user @', request.remote_addr
+#     print("on", datetime.datetime.now(), "\n\n")
+#
+# #    return Response('Authenticated: {0}'.format(unauthenticated_userid(request)))
+#     return Response('<body><h1>Home page!</h1></body>')
 
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
@@ -45,9 +58,10 @@ def main(global_config, **settings):
 #    jinja_env = _get_or_build_default_environment(config.registry)  # ?#?#?
     #config.set_request_factory(RequestWithUserAttribute)
 
-    config.add_route('hello', '/')
-    config.add_view(hello_world, route_name='hello')
-
+    config.add_route('home', '/')
+    config.add_route('auth', '/auth')
+    # config.add_view(hello_world, route_name='hello')
+    # config.add_view(hello_world, route_name='hello')
 
     config.scan()
     return config.make_wsgi_app()

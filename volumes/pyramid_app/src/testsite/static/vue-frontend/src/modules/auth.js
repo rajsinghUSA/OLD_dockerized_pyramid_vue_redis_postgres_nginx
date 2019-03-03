@@ -25,6 +25,7 @@ const getters = {
 const actions = {
   [AUTH.REQUEST]: ({commit, dispatch}, user) => {
     return new Promise((resolve, reject) => {
+      debugger;
       commit(AUTH.REQUEST)
       // apiCall({url: 'auth', data: user, method: 'POST'})
       axios({url: 'auth', data: user, method: 'POST' })

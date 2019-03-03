@@ -11,7 +11,7 @@ import pdb
 
 #searches for each user's groups to return their principal for RootFactory
 def groupfinder(username, request):
-
+    pdb.set_trace()
     print("*********************************")
     print("security.py's GROUPFINDER at work for ", username)
     print("request from-->", request.url)
@@ -46,6 +46,7 @@ class RootFactory(object):                                        ###
     ]                                                             ###
                                                                   ###
                                                                   ###
-    def __init__(self, request):                                  ###
+    def __init__(self, request):
+        pdb.set_trace()                             ###
         self.request = request                                    ###
 #####################################################################

@@ -1,0 +1,4 @@
+
+          [console_scripts]
+          qp = repoze.sendmail.queue:run_console
+          
