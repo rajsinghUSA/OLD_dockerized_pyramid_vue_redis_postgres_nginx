@@ -1,60 +1,18 @@
-let csrfSecret = '';
+import axios from 'axios'
 
-function handleResponse (res) {
-  const token = res.headers.get('csrf-token');
+const accessToken = localStorage.getItem('user-token')
 
-  if (token) {
-    csrfSecret = token;
-  }
-  if (res.headers.get('content-type').includes('application/json')) {
-    return res.json().then(data => ({ res, data }));
-  } else {
-    return res.text().then(data => ({ res, data }));
-  }
+export const http = axios.create({
+  // baseURL: 'http://localhost:8080',
+  headers: {'Content-Type':'application/json'}
+});
+console.log(http.defaults.headers.common['Content-Type'])
+console.log(http.defaults.headers.post['Content-Type'])
+console.log(http.defaults.headers.get['Content-Type'])
+// .defaults.headers = {
+//         'Content-Type': 'application/json',
+//         Authorization: 'myspecialpassword'
+//     }
+if (accessToken) {
+  http.defaults.headers.common['Authorization'] = accessToken
 }
-
-function getOptions (options = {}) {
-  return {
-    credentials: 'same-origin',
-    ...options,
-    headers: {
-      'Accept': 'application/json',
-      'csrf-token': csrfSecret,
-      ...options.headers,
-    },
-  };
-}
-
-export const get = (url) => {
-  return fetch(url, getOptions())
-    .then(handleResponse);
-};
-
-export const post = (url, body) => {
-  return fetch(url, getOptions({
-    method: 'post',
-    headers: {
-      'content-type': 'multipart/form-data',
-    },
-    body: JSON.stringify(body),
-  }))
-    .then(handleResponse);
-};
-
-export const put = (url, id, body) => {
-  return fetch(`${url}/${id}`, getOptions({
-    method: 'put',
-    headers: {
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  }))
-    .then(handleResponse);
-};
-
-export const del = (url, id) => {
-  return fetch(`${url}/${id}`, getOptions({
-    method: 'delete',
-  }))
-    .then(handleResponse);
-};

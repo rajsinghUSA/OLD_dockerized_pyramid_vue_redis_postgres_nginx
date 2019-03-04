@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import * as http from './modules/http'
+import { http } from './modules/http'
 // import user from './modules/user'
 // import auth from './modules/auth'
 
@@ -20,12 +20,18 @@ export default new Vuex.Store({
   actions: {
     signup: ({commit, dispatch}, user) => {
       commit('user_request');
-      console.log('test')
+      console.log(http.defaults.headers.common['Content-Type'])
+      console.log(http.defaults.headers.post['Content-Type'])
+      console.log(http.defaults.headers.get['Content-Type'])
+      // console.log(user)
       debugger;
-      http.post(server_url, user, {
-   headers: {
-       'Content-Type': 'multipart/form-data'
-   }})
+      // http.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded'
+      http.post('/auth', {hi: 'test'})
+   // headers: {
+   //     'Content-Type': 'multipart/form-data'
+   // }})
+
+
       // debugger;
       // axios({url: '/auth', data: user, method: 'POST',
       //   headers: {'Content-Type': 'application/x-www-form-urlencoded'}

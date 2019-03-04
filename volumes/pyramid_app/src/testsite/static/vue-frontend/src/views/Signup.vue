@@ -34,7 +34,7 @@
     },
     methods: {
       signup: function () {
-        debugger;
+        // debugger;
         let info = {
           name: this.name,
           email: this.email,
